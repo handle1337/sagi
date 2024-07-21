@@ -1,5 +1,30 @@
 #include <fstream>
+#include <vector>
 #include <iostream>
+#include <algorithm>
+#include <print>
+#include <boost/algorithm/string.hpp>
+
+using VectToken = std::vector<std::string>;
+
+
+struct Scanner {
+
+    void run(std::string source) {
+        VectToken tokens = tokenize(source);
+        for (auto &token : tokens) {
+            std::print("{0} ", token);
+        }
+        std::print("\n");
+    }
+
+    VectToken tokenize(std::string string) {
+        VectToken tokens {};
+        boost::algorithm::split(tokens, string, boost::is_any_of(" "));
+        return tokens;
+    }
+};
+
 
 
 int runFile(std::string path) {
@@ -16,16 +41,21 @@ int runFile(std::string path) {
 }
 
 void runPrompt() {
+
+    Scanner scanner;
     std::string input {};
     while (true)
     {
-        std::cout << "\n>>";
-        std::cin >> input;
-        std::cout << input;
+        std::print("");
+        std::getline(std::cin, input);
+        scanner.run(input);
+
     }
 }
 
 int main(){
+    Scanner scanner;
+
     runPrompt();
     return 0;
 }
