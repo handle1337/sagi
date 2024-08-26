@@ -1,0 +1,7 @@
+.vscode/
+.vs/
+vcpkg/
+vcpkg_installed/
+Testing/
+CMakeFiles/
+out/
