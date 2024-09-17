@@ -16,8 +16,13 @@ IF (Boost_FOUND)
     ADD_DEFINITIONS( "-DHAS_BOOST" )
 ENDIF()
 
-add_executable(sagi main.cpp)
-
+add_executable(sagi 
+"src/main.cpp"
+"src/lox.cpp"
+"src/scanner.cpp"
+"src/tokens.cpp"
+)
+target_include_directories(sagi PRIVATE include)
 
 
 include(CTest)
