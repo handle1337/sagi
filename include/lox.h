@@ -18,7 +18,7 @@ public:
 private:
 
     void report(int line, std::string where, std::string message) {
-        std::cout << "Error";
+        std::cout << "[line " << line << "] Error" << where << ": " << message << std::endl;
         hadError = true;
     }
 };

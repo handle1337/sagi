@@ -17,11 +17,16 @@ public:
 private:
 	
 	char advance();
+	bool match(char expected);
+	char peek();
+	void string();
+	bool isAtEnd();
+
 	void addToken(TokenType type);
+	template<typename T> void addToken(TokenType type, T value = T());
+
+
+
 	void scanToken();
 	
-
-	bool isAtEnd() {
-		return current >= m_source.length();
-	}
 };

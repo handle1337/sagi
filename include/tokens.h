@@ -1,4 +1,6 @@
+
 #include <iostream>
+#include <any>
 
 #pragma once
 
@@ -27,10 +29,12 @@ enum TokenType
 
 class Token {
 public:
+    //template <typename T>
     Token(TokenType type, std::string lexeme, int line);
 private:
     friend std::ostream& operator<<(std::ostream& os, Token& token);
     TokenType m_type = TokenType::_EOF;
     std::string m_lexeme{};
     int m_line{};
+
 };

@@ -37,6 +37,7 @@ int Lox::runFile(std::string path) {
         run(strInput);
         if (hadError) exit(65);
     }
+    return 0;
 }
 
 void Lox::runPrompt() {
