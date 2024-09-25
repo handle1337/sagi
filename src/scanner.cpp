@@ -41,8 +41,8 @@ void Scanner::string() {
 		m_lox.error(line, "Unterminated string");
 	}
 
-	std::string value = m_source.substr(start+1, (current - start)-1);
-	addToken(STRING);
+	std::string str = m_source.substr(start+1, (current - start)-1);
+	addToken(STRING, str);
 }
 
 bool Scanner::isAtEnd() {
@@ -59,24 +59,19 @@ std::vector<Token> Scanner::scanTokens() {
 }
 
 
-//void Scanner::addToken(TokenType type) {
-//	addToken(type);
-//}
-
-//template<typename T> 
-//void Scanner::addToken(TokenType type, T value) {
-//	std::string text = m_source.substr(start, current-start); 
-//	m_tokens.push_back(Token(type, text, line));
-//	//m_tokens.push_back(Token(type, text, line, value));
-//	
-//}
-
- 
 void Scanner::addToken(TokenType type) {
 	std::string text = m_source.substr(start, current-start);
-	Token a(type, text, line);
-	m_tokens.push_back(a);
+	Token token(type, text, line);
+	m_tokens.push_back(token);
 	
+}
+
+template<typename T>
+void Scanner::addToken(TokenType type, T value) {
+	std::string text = m_source.substr(start, current - start);
+	Token token(type, text, line, value);
+	m_tokens.push_back(token);
+
 }
 
 void Scanner::scanToken()

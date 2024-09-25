@@ -6,7 +6,8 @@
 
 
 std::ostream& operator<<(std::ostream& os, Token& token) {
-    return os << "Lexeme: " << token.m_lexeme << " type: " << token.m_type << std::endl;
+    return os << "Lexeme: " << token.m_lexeme << " type: " << token.m_type 
+        << " Literal: " << token.m_value << std::endl;
 }
 
 Lox::Lox() {};

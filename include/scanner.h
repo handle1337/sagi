@@ -23,7 +23,7 @@ private:
 	bool isAtEnd();
 
 	void addToken(TokenType type);
-	template<typename T> void addToken(TokenType type, T value = T());
+	template<typename T> void addToken(TokenType type, T value);
 
 
 

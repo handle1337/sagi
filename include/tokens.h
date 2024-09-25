@@ -26,15 +26,15 @@ enum TokenType
     _EOF
 };
 
-
 class Token {
 public:
-    //template <typename T>
+   
     Token(TokenType type, std::string lexeme, int line);
+    Token(TokenType type, std::string lexeme, int line, std::string value);
 private:
     friend std::ostream& operator<<(std::ostream& os, Token& token);
     TokenType m_type = TokenType::_EOF;
     std::string m_lexeme{};
     int m_line{};
-
+    std::string m_value;
 };
