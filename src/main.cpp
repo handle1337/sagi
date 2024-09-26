@@ -1,5 +1,4 @@
 #include <fstream>
-
 #include <iostream>
 #include <algorithm>
 //#include <boost/algorithm/string.hpp>
@@ -9,7 +8,6 @@
 #include "lox.h"
 
 int main(int argc, char* argv[]) {
-
     Lox lox;
 
     if (argc > 1)

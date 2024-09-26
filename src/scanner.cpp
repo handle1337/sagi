@@ -4,8 +4,6 @@
 #include "tokens.h"
 
 
-
-
 Scanner::Scanner(std::string source)
 	: m_source(source),
 	start{ 0 },
@@ -31,6 +29,7 @@ char Scanner::peek() {
 }
 
 void Scanner::string() {
+	std::cout << "exec" << std::endl;
 	while (peek() != '"' && !isAtEnd()) {
 		if (peek() == '\n') 
 			line++;
@@ -41,7 +40,8 @@ void Scanner::string() {
 		m_lox.error(line, "Unterminated string");
 	}
 
-	std::string str = m_source.substr(start+1, (current - start)-1);
+	advance();
+	std::string str = m_source.substr(start+1, (current - start)-2);
 	addToken(STRING, str);
 }
 
@@ -68,6 +68,7 @@ void Scanner::addToken(TokenType type) {
 
 template<typename T>
 void Scanner::addToken(TokenType type, T value) {
+	std::cout << "added " << value << std::endl;
 	std::string text = m_source.substr(start, current - start);
 	Token token(type, text, line, value);
 	m_tokens.push_back(token);
@@ -127,8 +128,7 @@ void Scanner::scanToken()
 		err.push_back(c);
 		m_lox.error(line, err);
 		break;
-	} 
-	//std::cout << (int)c << c << "dfgdffg";
+	}
 	
 }
 
