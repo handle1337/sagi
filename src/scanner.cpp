@@ -23,25 +23,51 @@ bool Scanner::match(char expected) {
 	return true;
 }
 
+
+bool Scanner::match(std::string expected) {
+	size_t expectedLenght = expected.length();
+	std::string text = m_source.substr(current, expectedLenght);
+	if (isAtEnd()) return false;
+	if (text != expected) return false;
+
+	current = current + expectedLenght;
+	return true;
+}
+
 char Scanner::peek() {
 	if (isAtEnd()) return '\0';
 	return m_source[current];
 }
 
-void Scanner::string() {
-	std::cout << "exec" << std::endl;
-	while (peek() != '"' && !isAtEnd()) {
-		if (peek() == '\n') 
-			line++;
+void Scanner::string(bool isMultiline) {
+	std::string str{};
+	if (!isMultiline) {
+		while (peek() != '"' && !isAtEnd()) {
+			advance();
+		}
+
+		if (isAtEnd()) {
+			m_lox.error(line, "Unterminated string");
+		}
+
 		advance();
+		str = m_source.substr(start + 1, (current - start) - 2);
 	}
+	else {
+		while (!match(R"("")") && !isAtEnd()) {
+			if (peek() == '\n')
+				line++;
+			advance();
+		}
 
-	if (isAtEnd()) {
-		m_lox.error(line, "Unterminated string");
+		if (isAtEnd()) {
+			m_lox.error(line, "Unterminated string");
+		}
+
+		advance();
+		str = m_source.substr(start + 3, (current - start) - 6);
 	}
-
-	advance();
-	std::string str = m_source.substr(start+1, (current - start)-2);
+	
 	addToken(STRING, str);
 }
 
@@ -68,7 +94,6 @@ void Scanner::addToken(TokenType type) {
 
 template<typename T>
 void Scanner::addToken(TokenType type, T value) {
-	std::cout << "added " << value << std::endl;
 	std::string text = m_source.substr(start, current - start);
 	Token token(type, text, line, value);
 	m_tokens.push_back(token);
@@ -118,7 +143,12 @@ void Scanner::scanToken()
 		line++;
 		break;
 	case '"':
-		string();
+		if (match(R"("")")) {
+			string(true);
+		}
+		else {
+			string();
+		}
 		break;
 
 

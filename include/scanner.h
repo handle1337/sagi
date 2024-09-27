@@ -1,9 +1,12 @@
+
+#pragma once
+
 #include <vector>
 #include <iostream>
+
 #include "lox.h"
 
 
-#pragma once
 
 class Scanner {
 	Lox m_lox;
@@ -18,8 +21,9 @@ private:
 	
 	char advance();
 	bool match(char expected);
+	bool match(std::string expected);
 	char peek();
-	void string();
+	void string(bool multiLine=false);
 	bool isAtEnd();
 
 	void addToken(TokenType type);

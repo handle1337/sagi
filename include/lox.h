@@ -1,9 +1,8 @@
-
-
+#pragma once
 
 #include "tokens.h"
 
-#pragma once
+
 
 
 class Lox {
