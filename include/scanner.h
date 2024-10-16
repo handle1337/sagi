@@ -23,8 +23,10 @@ private:
 	bool match(char expected);
 	bool match(std::string expected);
 	char peek();
+	char peekNext();
 	void string(bool multiLine=false);
 	bool isAtEnd();
+	void number();
 
 	void addToken(TokenType type);
 	template<typename T> void addToken(TokenType type, T value);

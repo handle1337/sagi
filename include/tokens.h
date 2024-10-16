@@ -30,6 +30,7 @@ class Token {
 public:
    
     Token(TokenType type, std::string lexeme, int line);
+    //TODO overload w/ all ts
     Token(TokenType type, std::string lexeme, int line, std::string value);
 private:
     friend std::ostream& operator<<(std::ostream& os, Token& token);

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string> 
 
 #include "scanner.h"
 #include "tokens.h"
@@ -23,7 +24,6 @@ bool Scanner::match(char expected) {
 	return true;
 }
 
-
 bool Scanner::match(std::string expected) {
 	size_t expectedLenght = expected.length();
 	std::string text = m_source.substr(current, expectedLenght);
@@ -34,9 +34,16 @@ bool Scanner::match(std::string expected) {
 	return true;
 }
 
+
 char Scanner::peek() {
 	if (isAtEnd()) return '\0';
 	return m_source[current];
+}
+
+char Scanner::peekNext() {
+	//Peek 2 characters ahead
+	if (current + 1 >= m_source.length()) return '\0';
+	return m_source[current + 1];
 }
 
 void Scanner::string(bool isMultiline) {
@@ -69,6 +76,29 @@ void Scanner::string(bool isMultiline) {
 	}
 	
 	addToken(STRING, str);
+}
+
+
+void Scanner::number() {
+	while (isdigit(peek()))
+		advance();
+
+	if (peek() == '.' && isdigit(peekNext())) {
+		//Consume the "."
+		advance();
+
+		while (isdigit(peek()))
+			advance();
+	}
+
+
+	//TODO: cast to double
+
+	std::string number = m_source.substr(start, (current - start));
+
+
+	addToken(NUMBER, number);
+
 }
 
 bool Scanner::isAtEnd() {
@@ -144,6 +174,7 @@ void Scanner::scanToken()
 		break;
 	case '"':
 		if (match(R"("")")) {
+			// 3 '"' denotes multiline str
 			string(true);
 		}
 		else {
@@ -153,6 +184,10 @@ void Scanner::scanToken()
 
 
 	default:
+		if (isdigit(c)) {
+			number();
+			break;
+		}
 		
 		std::string err = "Unexpected character: ";
 		err.push_back(c);
